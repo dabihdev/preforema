@@ -71,7 +71,7 @@ class Project:
         paragraph7 = new_document.add_paragraph("Inserire qui la discussione per questa sezione.")
 
         # Save the newly created docx document in the folder ./previsioni/ with the name formatted as "previsione_<today's date>.docx"
-        new_document.save(self.forecast_date+self.filenames["docx"])
+        new_document.save(self.path+self.filenames["docx"])
 
     def add_map(self):
         """Create new SVG file in the forecast folder with template map and updated date and author."""

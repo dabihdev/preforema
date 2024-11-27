@@ -1,5 +1,4 @@
 from ui import UI
-from project import Project
 
 # MAIN
 if __name__ == "__main__":
