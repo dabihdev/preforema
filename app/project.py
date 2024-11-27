@@ -1,21 +1,24 @@
-import os                          # operations within the folders (works only on Windows)
-from docx import Document          # .docx file reading and writing
-from bs4 import BeautifulSoup      # XML parsing
-from settings import *             # import global settings
+import os                                     # operations within the folders (works only on Windows)
+from docx import Document                     # .docx file reading and writing
+from bs4 import BeautifulSoup                 # XML parsing
+from settings import *                        # import global settings
+from datetime import datetime, timedelta      # date and time processing
 
 class Project:
     def __init__(self,
-                 forecast_date: str,
+                 selected_day: int,
                  author_string: str,
                  output_dir: str
                  ):
         """Initialize the project."""
 
+        # set forecast date
+        forecast_day = datetime.today() + timedelta(days=selected_day)
+        forecast_date = forecast_day.strftime('%d-%m-%Y') # convert to string format
+        forecast_day_weekday = weekdays_dict[forecast_day.weekday()]
+        
         # project name = folder name = forecast date
         self.forecast_date = forecast_date
-
-        # get datetime object from forecast date
-        
 
         # project path
         self.path = output_dir+forecast_date+"/"                        
@@ -71,7 +74,7 @@ class Project:
         new_document.save(self.forecast_date+self.filenames["docx"])
 
     def add_map(self):
-        """Create new SVG file in the forecast folder with updated date and author."""
+        """Create new SVG file in the forecast folder with template map and updated date and author."""
 
         # Open the file "./assets/mappa.svg" and read xml content
         with open("../assets/mappa.svg", "rt") as svg:
