@@ -1,10 +1,11 @@
-from settings import *      # import global settings
-from project import Project
+from settings import *        # global settings
+from project import Project   # Project class
+import os                     # operations within the folders (works only on Windows)
 
 class UI:
     def __init__(self):
         self.selected_day = selected_day
-
+        self.current_project = None
 
     def get_input(self):
         """Display to the user the available commands for this program, get input from user."""
@@ -17,6 +18,25 @@ class UI:
         # get input from user
         self.user_choice = input("> ")
 
+    def get_author_name(self) -> str:
+        """Ask the user(s) to insert his/her/(their) family name. Return formatted author(s) name(s)."""
+
+        # Initialize output_string
+        author_string = ""
+
+        # Get user input
+        authors_names = input("Specificare il cognome dell'autore. In caso di 2 o più autori, specificare i diversi cognomi separandoli con uno spazio> ")
+
+        # Split authors names if more than one is given
+        authors_names_list = authors_names.split() # split the names and put them in a list
+
+        for name in authors_names_list:
+            author_string += name.upper() + "/"    # attach the names in upper case to the author_string
+
+        author_string = author_string[:-1]         # delete last '/'
+
+        # return output string
+        return author_string
 
     def select_forecast_day(self):
         """Change current forecast day."""
@@ -36,7 +56,16 @@ class UI:
 
 
     def create_project(self):
-        pass
+        print()
+        author_string = self.get_author_name()                                                # ask user input, return author(s) name(s)
+        print("Sto creando il progetto, attendere...")
+        self.current_project = Project(self.selected_day, author_string)                      # initialize project and project directory
+        self.current_project.add_map()                                                        # add SVG template map to project directory
+        self.current_project.add_document()                                                   # add docx template document to project directory
+        print("Progetto creato con successo! Sto aprendo i file...")
+        os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
+        os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
+        
 
     def export_to_html(self):
         pass
