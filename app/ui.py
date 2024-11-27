@@ -73,6 +73,7 @@ class UI:
         """Change current forecast day, reset current project to None."""
         # prompt user
         print()
+        print("ATTENZIONE: CAMBIARE IL GIORNO DI PREVISIONE FARA' USCIRE DAL PROGETTO IN CORSO\nSE SI DESIDERA TORNARE AL PROGETTO CORRENTE DIGITARE UNA LETTERA QUALSIASI.")
         day = input("Digitare il giorno di previsione come un numero intero (1 per domani, 2 per dopodomani, ecc.)> ")
         
         # if input is an integer, update selected day and reset project

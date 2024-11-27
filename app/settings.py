@@ -1,3 +1,9 @@
+# ====================================================================================
+# Author: @dabihdev
+# Year:   2024
+# Python version: 3.6.5
+# ====================================================================================
+
 # GLOBAL SETTINGS
 from datetime import datetime, timedelta      # date and time processing
 
