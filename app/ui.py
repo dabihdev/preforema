@@ -7,7 +7,7 @@ class UI:
         """Initialize User Interface."""
         
         # UI global settings
-        self.selected_day = selected_day
+        self.selected_day = 1 # default +1 (tomorrow)
         self.current_project = None
         self.running = True
 
