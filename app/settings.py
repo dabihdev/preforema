@@ -39,10 +39,10 @@ todays_weekday = weekdays_dict[datetime.today().weekday()]
 selected_day = 1 # write 1 for tomorrow, 2 for the day after tomorrow etc.
 
 # Dictionary of available user commands
-commands = {
+""" commands = {
     "s": f"selezionare il giorno di previsione (attuale: +{selected_day}).",
     "p": "creare una nuova previsione (mappa e testo).",
     "e": "esportare il testo di previsione sulla pagina html.",
     "i": "mostrare informazioni sul programma.",
     "x": "uscire dal programma."
-}
+} """

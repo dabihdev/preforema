@@ -28,8 +28,8 @@ class UI:
         
         # display available commands
         print("")
-        for key in commands.keys():
-            print(f"- Digita [{key}] per {commands[key]}")
+        for key in self.commands.keys():
+            print(f"- Digita [{key}] per {self.commands[key]}")
         
         # get input from user
         self.user_choice = input("> ")
