@@ -29,19 +29,20 @@ class Project:
         self.forecast_weekday = weekdays_dict[self.forecast_day.weekday()]
 
         # project path
-        self.path = output_dir+self.forecast_date+"/"                        
+        self.path = output_dir+self.forecast_date+"/"                                                               
         
+        # author(s) name(s)
+        self.author_string = author_string
+
         # dictionary of file names inside the project directory (html is created only when exporting text to html page)
         self.filenames = {
+            "author": self.author_string,
             "forecast_day": selected_day,
             "docx": f"previsione_{self.forecast_date}.docx",
             "svg": f"mappa_{self.forecast_date}.svg",
             "html": "",
             "json": f"{self.forecast_date}.json",
-            }                                            
-        
-        # author(s) name(s)
-        self.author_string = author_string
+        }     
 
         # create output folder if not existing already
         if not os.path.exists(output_dir):
@@ -219,18 +220,3 @@ class Project:
         finally:
             json.dump(self.filenames, output_file, indent=2)
             output_file.close()
-
-    def load_project(self):
-        """Load project data from existing project."""
-
-        # try fetching data
-        print("Sto caricando il progetto...")
-        try:
-            file = open(self.path+"/"+self.forecast_date+'.json', 'r')
-        except:
-            print("Nessun progetto con questo nome!")
-            return # stops function here
-        else:
-            self.filenames = json.load(file)
-        finally:
-            file.close()

@@ -6,7 +6,7 @@
 
 from settings import *        # global settings
 from project import Project   # Project class
-import os                     # operations within the folders (works only on Windows)
+import json                   # JSON parsing
 
 class UI:
     """Class initializing the program User Interface."""
@@ -23,6 +23,7 @@ class UI:
         
         # dictionary of displayed commands
         self.commands = {
+            "a": "aprire un progetto esistente.",
             "s": f"selezionare il giorno di previsione (attuale: +{self.selected_day}).",
             "p": "creare una nuova previsione (mappa e testo).",
             "e": "esportare il testo di previsione sulla pagina html.",
@@ -31,6 +32,28 @@ class UI:
         }
 
     
+    def load_project(self):
+        """Load project data from existing project."""
+
+        # ask user project name
+        print()
+        folder_name = input("Inserire il nome della cartella del progetto che si vuole caricare> ")
+        
+        # try fetching data
+        print("Sto caricando il progetto...")
+        try:
+            file = open(output_dir+folder_name+"/"+folder_name+'.json', 'r')
+        except:
+            print("Nessun progetto con questo nome!")
+            return # stops function here
+        else:
+            print("Sto caricando il progetto...")
+            data = json.load(file)                                                             # load project data
+            self.current_project = Project(data["forecast_day"], data["author"])               # initialize project
+        finally:
+            file.close()
+    
+
     def update_commands(self):
         """Update commands description with current forecast day."""
         self.commands["s"] =  f"selezionare il giorno di previsione (attuale: +{self.selected_day})."
@@ -143,7 +166,9 @@ class UI:
         self.get_input()
 
         # handle user input
-        if self.user_choice == "s":
+        if self.user_choice == "a":
+            self.load_project()
+        elif self.user_choice == "s":
             self.update_forecast_day()
         elif self.user_choice == "p":
             self.create_project()
