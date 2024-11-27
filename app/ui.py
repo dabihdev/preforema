@@ -1,8 +1,15 @@
+# ====================================================================================
+# Author: @dabihdev
+# Year:   2024
+# Python version: 3.6.5
+# ====================================================================================
+
 from settings import *        # global settings
 from project import Project   # Project class
 import os                     # operations within the folders (works only on Windows)
 
 class UI:
+    """Class initializing the program User Interface."""
     def __init__(self):
         """Initialize User Interface."""
         

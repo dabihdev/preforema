@@ -1,3 +1,9 @@
+# ====================================================================================
+# Author: @dabihdev
+# Year:   2024
+# Python version: 3.6.5
+# ====================================================================================
+
 import os                                     # operations within the folders (works only on Windows)
 from docx import Document                     # .docx file reading and writing
 from bs4 import BeautifulSoup                 # XML parsing
@@ -5,6 +11,7 @@ from settings import *                        # import global settings
 from datetime import datetime, timedelta      # date and time processing
 
 class Project:
+    """Class initializing a forecast project."""
     def __init__(self,
                  selected_day: int,
                  author_string: str
