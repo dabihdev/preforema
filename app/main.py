@@ -296,8 +296,8 @@ if __name__ == "__main__":
             new_folder_path = create_new_forecast_folder()                              # create new forecast directory with the forecast's date 
             new_svg_name = create_updated_forecast_map(author_string, new_folder_path)  # create new SVG file inside forecast directory
             new_document_name = create_forecast_template_document(new_folder_path)      # create template document inside forecast directory
-            os.startfile(new_folder_path+new_document_name)                       # open the newly created docx file in MS Word
-            os.startfile(new_folder_path+new_svg_name)                            # open newly created svg map
+            os.system("start "+new_folder_path+new_document_name)                       # open the newly created docx file in MS Word
+            os.system("start "+new_folder_path+new_svg_name)                            # open newly created svg map
             print("Progetto creato con successo!")
         
         # insert text from docx into html page
@@ -310,7 +310,7 @@ if __name__ == "__main__":
                 print("ERRORE: File di progetto non trovati. Prima di esportare il testo assicurarsi di aver creato un progetto.") # print error message
             else:
                 print("Testo esportato!")
-                os.startfile(new_folder_path+new_html_name)                           # open newly created HTML page
+                os.system("start "+new_folder_path+new_html_name)                           # open newly created HTML page
         
         # display info
         elif user_choice == "i":
