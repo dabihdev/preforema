@@ -7,8 +7,7 @@ from datetime import datetime, timedelta      # date and time processing
 class Project:
     def __init__(self,
                  selected_day: int,
-                 author_string: str,
-                 output_dir: str
+                 author_string: str
                  ):
         """Initialize the project."""
 

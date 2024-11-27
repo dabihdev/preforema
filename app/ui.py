@@ -1,8 +1,9 @@
 from settings import *      # import global settings
+from project import Project
 
 class UI:
     def __init__(self):
-        pass
+        self.selected_day = selected_day
 
 
     def get_input(self):
@@ -18,7 +19,20 @@ class UI:
 
 
     def select_forecast_day(self):
-        pass
+        """Change current forecast day."""
+        # prompt user
+        print()
+        day = input("Digitare il giorno di previsione come un numero intero (1 per domani, 2 per dopodomani, ecc.)> ")
+        
+        # if input is valid, create new project for the selected day
+        try:
+            day = int(day)
+        except :
+            print()
+            print ('Il valore inserito non è numerico!')
+        else:
+            self.selected_day = day
+
 
     def create_project(self):
         pass
