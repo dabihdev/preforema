@@ -7,6 +7,7 @@ class UI:
         self.selected_day = selected_day
         self.current_project = None
 
+    
     def get_input(self):
         """Display to the user the available commands for this program, get input from user."""
         
@@ -18,6 +19,7 @@ class UI:
         # get input from user
         self.user_choice = input("> ")
 
+    
     def get_author_name(self) -> str:
         """Ask the user(s) to insert his/her/(their) family name. Return formatted author(s) name(s)."""
 
@@ -38,6 +40,7 @@ class UI:
         # return output string
         return author_string
 
+    
     def select_forecast_day(self):
         """Change current forecast day."""
         # prompt user
@@ -56,6 +59,7 @@ class UI:
 
 
     def create_project(self):
+        """Ask user for author(s) name(s), initialize project directory and files, open docx and svg."""
         print()
         author_string = self.get_author_name()                                                # ask user input, return author(s) name(s)
         print("Sto creando il progetto, attendere...")
@@ -68,7 +72,17 @@ class UI:
         
 
     def export_to_html(self):
-        pass
+        """If project directory and docx file are found, create html page and export forecast text to the html page."""
+        try:
+            print("Sto esportando il testo sulla pagina HTML...")
+            self.current_project.add_html()                            # add docx template document to project directory
+            self.current_project.export_text_to_html()                 # export forecast text to HTML page
+        except:
+            print("ERRORE: File di progetto non trovati. Prima di esportare il testo assicurarsi di aver creato un progetto.") # print error message
+        else:
+            print("Testo esportato! Apro la pagina...")
+            os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
+
 
     def show_info(self):
         pass
