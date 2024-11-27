@@ -4,8 +4,23 @@ import os                     # operations within the folders (works only on Win
 
 class UI:
     def __init__(self):
+        
         self.selected_day = selected_day
         self.current_project = None
+        
+        # dictionary of displayed commands
+        self.commands = {
+            "s": f"selezionare il giorno di previsione (attuale: +{self.selected_day}).",
+            "p": "creare una nuova previsione (mappa e testo).",
+            "e": "esportare il testo di previsione sulla pagina html.",
+            "i": "mostrare informazioni sul programma.",
+            "x": "uscire dal programma."
+        }
+
+    
+    def update_commands(self):
+        """Update commands description with current forecast day."""
+        self.commands["s"] =  f"selezionare il giorno di previsione (attuale: +{selected_day})."
 
     
     def get_input(self):
