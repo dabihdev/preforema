@@ -47,10 +47,10 @@ class UI:
             print("Nessun progetto con questo nome!")
             return # stops function here
         else:
-            print("Sto caricando il progetto...")
             data = json.load(file)                                                             # load project data
             self.current_project = Project(data["forecast_day"], data["author"])               # initialize project
             self.selected_day = data["forecast_day"]                                           # update forecast day
+            print("Progetto caricato!")
         finally:
             file.close()
     
