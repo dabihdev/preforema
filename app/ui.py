@@ -9,6 +9,9 @@ class UI:
         # UI global settings
         self.selected_day = selected_day
         self.current_project = None
+
+        # current user input
+        self.user_choice = None
         
         # dictionary of displayed commands
         self.commands = {
@@ -118,11 +121,25 @@ class UI:
         print()
 
     def run(self):
-        # update selected day
 
         # update commands
+        self.update_commands()
 
         # prompt user
+        self.get_input()
 
         # handle user input
-        pass
+        if self.user_choice == "s":
+            self.update_forecast_day()
+        elif self.user_choice == "p":
+            self.create_project()
+        elif self.user_choice == "e":
+            self.export_to_html()
+        elif self.user_choice == "i":
+            self.show_info()
+        elif self.user_choice == "x":
+            self.exit_program()
+        else:
+            print()
+            print("Comando non riconosciuto, riprovare.")
+            print()
