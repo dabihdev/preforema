@@ -1,5 +1,7 @@
 import os                          # operations within the folders (works only on Windows)
 from docx import Document          # .docx file reading and writing
+from bs4 import BeautifulSoup      # XML parsing
+from settings import *             # import global settings
 
 class Project:
     def __init__(self,
@@ -11,6 +13,9 @@ class Project:
 
         # project name = folder name = forecast date
         self.forecast_date = forecast_date
+
+        # get datetime object from forecast date
+        
 
         # project path
         self.path = output_dir+forecast_date+"/"                        
@@ -24,7 +29,7 @@ class Project:
             }                                            
         
         # author(s) name(s)
-        self.author = author_string
+        self.author_string = author_string
 
         # create output folder if not existing already
         if not os.path.exists(output_dir):
@@ -65,5 +70,30 @@ class Project:
         # Save the newly created docx document in the folder ./previsioni/ with the name formatted as "previsione_<today's date>.docx"
         new_document.save(self.forecast_date+self.filenames["docx"])
 
-    
+    def add_map(self):
+        """Create new SVG file in the forecast folder with updated date and author."""
+
+        # Open the file "./assets/mappa.svg" and read xml content
+        with open("../assets/mappa.svg", "rt") as svg:
+            xml_content = svg.read()
+
+        xml_soup = BeautifulSoup(xml_content, "xml")
+
+        # Create updated string that will substitute the text
+        newstring_date = f"Valida dalle ore 00:00 UTC alle 24:00 UTC di {forecast_day_weekday.lower()} {self.forecast_date} - Emessa: {todays_weekday.lower()} {todays_date} alle ore 15:00 UTC "
+        newstring_author = "AUTORE: " + self.author_string
+
+        # Find and update text object "DATA E AUTORE"
+        xml_soup.find("tspan", {"id": "tspan25"}).string = newstring_date    # update dates
+        xml_soup.find("tspan", {"id": "tspan26"}).string = newstring_author  # update author's name
+        new_xml_content = str(xml_soup)                                      # store updated xml content as string
+
+        
+        # if file already exists overwrite it, otherwise create it
+        if os.path.isfile(self.path+self.filenames["svg"]):
+            with open(self.path+self.filenames["svg"], "w") as svg:
+                svg.write(new_xml_content)
+        else:
+            with open(self.path+self.filenames["svg"], "x") as svg:
+                svg.write(new_xml_content)
 
