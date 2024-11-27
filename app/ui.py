@@ -88,8 +88,8 @@ class UI:
         self.current_project.add_map()                                                        # add SVG template map to project directory
         self.current_project.add_document()                                                   # add docx template document to project directory
         print("Progetto creato con successo! Sto aprendo i file...")
-        os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
-        os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
+        # os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
+        # os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
         
 
     def export_to_html(self):

@@ -114,12 +114,12 @@ class Project:
         month = months_dict[self.forecast_day.month]
         year = self.forecast_day.year
         new_title = f"PREVISIONE PER {weekday} {day} {month} {year}"
-
+        
         # Create updated forecast time range
         new_forecast_time_range = f"Valida dalle ore 00:00 alle 24:00 UTC di {weekday.lower()} {day} {month.lower()} {year}"
-
+        
         # Create updated authors string
-        new_authors = "Previsore: " + new_authors
+        new_authors = "Previsore: " + self.author_string
 
         # Create date of forecast issue
         weekday = weekdays_dict[today.weekday()]
@@ -145,8 +145,9 @@ class Project:
             with open(self.path+new_html_name, "x") as html:
                 html.write(str(html_soup.prettify(formatter="html")))
 
+        print("File salvato")
         # Add file name to project dictionary of file names
-        self.filenames["html"] = f"{self.forecast_date}.html"
+        self.filenames["html"] = new_html_name
 
 
     def export_text_to_html(self):
