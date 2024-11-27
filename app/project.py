@@ -24,11 +24,11 @@ class Project:
         # project path
         self.path = output_dir+self.forecast_date+"/"                        
         
-        # dictionary of file names inside the project directory
+        # dictionary of file names inside the project directory (html is created only when exporting text to html page)
         self.filenames = {
             "docx": f"previsione_{self.forecast_date}.docx",
             "svg": f"mappa_{self.forecast_date}.svg",
-            "html": f"{self.forecast_date}.html",
+            "html": "",
             "json": f"{self.forecast_date}.json",
             }                                            
         
@@ -145,3 +145,57 @@ class Project:
         else:
             with open(self.path+new_html_name, "x") as html:
                 html.write(str(html_soup.prettify(formatter="html")))
+
+        # Add file name to project dictionary of file names
+        self.filenames["html"] = f"{self.forecast_date}.html"
+
+
+    def export_text_to_html(self):
+        """Export forecast text from docx document to html page."""
+        
+        # Read docx paragraphs
+        document = Document(self.path+self.filenames["docx"])
+        paragraphs = []
+        for paragraph in document.paragraphs:
+            paragraphs.append(paragraph.text)
+
+        # Split paragraphs in 2 blocks: summary ("testo breve") and discussion ("discussione")
+        # summary
+        summary=[]
+        for paragraph in paragraphs:
+            if paragraph=="TESTO BREVE":
+                continue
+            elif paragraph=="DISCUSSIONE":
+                break
+            else:
+                summary.append(paragraph)
+
+        # discussion
+        paragraphs.remove("TESTO BREVE")
+        paragraphs.remove("DISCUSSIONE")
+        for paragraph in summary:
+            paragraphs.remove(paragraph)
+        
+        discussion = paragraphs[:]
+
+        # Read html code
+        with open(self.path+self.filenames["html"]) as file:
+            html_code = file.readlines()
+
+        # Add discussion
+        for i in range(len(discussion)):
+            if discussion[i].startswith("-"): # make section headers bold
+                html_code.insert(89+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'><strong>{discussion[i]}</strong></span></p>")
+            else:
+                html_code.insert(89+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'>{discussion[i]}</span></p>")
+        
+        # Add summary
+        for i in range(len(summary)):
+            if summary[i].startswith("-"): # make section headers bold
+                html_code.insert(82+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'><strong>{summary[i]}</strong></span></p>")
+            else:
+                html_code.insert(82+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'>{summary[i]}</span></p>")
+
+        # Overwrite html document
+        with open(self.path+self.filenames["html"], "w", encoding="utf-8") as output:
+            output.writelines(html_code)
