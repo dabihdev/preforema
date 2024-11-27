@@ -154,7 +154,7 @@ class UI:
         """Print the content of README.txt"""
 
         # read and print text from file
-        with open("../README.txt", newline="", encoding="utf-8") as file:
+        with open("../info.txt", newline="", encoding="utf-8") as file:
             for line in file.readlines():
                 print(line.strip())
 
