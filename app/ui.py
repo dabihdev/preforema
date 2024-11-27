@@ -63,8 +63,16 @@ class UI:
     def get_input(self):
         """Display to the user the available commands for this program, get input from user."""
         
+        # if current project not empty, print current project name and authors names
+        print()
+        if(self.current_project):
+            print(f"GIORNO DI PREVISIONE: {self.current_project.forecast_date}")
+            print(f"AUTORE/I: {self.current_project.author_string}")
+        else:
+            print("PROGETTO VUOTO")
+        
         # display available commands
-        print("")
+        print()
         for key in self.commands.keys():
             print(f"- Digita [{key}] per {self.commands[key]}")
         
