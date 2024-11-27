@@ -214,8 +214,23 @@ class Project:
         
         try:
             output_file = open(self.path+self.forecast_date+".json", "x")
-        except: # if file already exists
+        except: # if file already exists, overwrite
             output_file = open(self.path+self.forecast_date+".json", "w")
         finally:
             json.dump(self.filenames, output_file, indent=2)
             output_file.close()
+
+    def load_project(self):
+        """Load project data from existing project."""
+
+        # try fetching data
+        print("Sto caricando il progetto...")
+        try:
+            file = open(self.path+"/"+self.forecast_date+'.json', 'r')
+        except:
+            print("Nessun progetto con questo nome!")
+            return # stops function here
+        else:
+            self.filenames = json.load(file)
+        finally:
+            file.close()
