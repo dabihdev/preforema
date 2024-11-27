@@ -41,7 +41,7 @@ class UI:
         return author_string
 
     
-    def select_forecast_day(self):
+    def update_forecast_day(self):
         """Change current forecast day."""
         # prompt user
         print()
@@ -101,4 +101,11 @@ class UI:
         print()
 
     def run(self):
+        # update selected day
+
+        # update commands
+
+        # prompt user
+
+        # handle user input
         pass
