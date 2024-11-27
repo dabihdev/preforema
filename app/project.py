@@ -15,10 +15,13 @@ class Project:
         # set forecast date
         forecast_day = datetime.today() + timedelta(days=selected_day)
         forecast_date = forecast_day.strftime('%d-%m-%Y') # convert to string format
-        forecast_day_weekday = weekdays_dict[forecast_day.weekday()]
+        forecast_weekday = weekdays_dict[forecast_day.weekday()]
         
         # project name = folder name = forecast date
         self.forecast_date = forecast_date
+        
+        # set weekday of forecast date
+        self.forecast_weekday = forecast_weekday
 
         # project path
         self.path = output_dir+forecast_date+"/"                        
@@ -83,7 +86,7 @@ class Project:
         xml_soup = BeautifulSoup(xml_content, "xml")
 
         # Create updated string that will substitute the text
-        newstring_date = f"Valida dalle ore 00:00 UTC alle 24:00 UTC di {forecast_day_weekday.lower()} {self.forecast_date} - Emessa: {todays_weekday.lower()} {todays_date} alle ore 15:00 UTC "
+        newstring_date = f"Valida dalle ore 00:00 UTC alle 24:00 UTC di {self.forecast_weekday.lower()} {self.forecast_date} - Emessa: {todays_weekday.lower()} {todays_date} alle ore 15:00 UTC "
         newstring_author = "AUTORE: " + self.author_string
 
         # Find and update text object "DATA E AUTORE"
