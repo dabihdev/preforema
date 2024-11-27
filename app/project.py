@@ -9,6 +9,7 @@ from docx import Document                     # .docx file reading and writing
 from bs4 import BeautifulSoup                 # XML parsing
 from settings import *                        # import global settings
 from datetime import datetime, timedelta      # date and time processing
+import json                                   # JSON data parsing
 
 class Project:
     """Class initializing a forecast project."""
@@ -32,6 +33,7 @@ class Project:
         
         # dictionary of file names inside the project directory (html is created only when exporting text to html page)
         self.filenames = {
+            "forecast_day": selected_day,
             "docx": f"previsione_{self.forecast_date}.docx",
             "svg": f"mappa_{self.forecast_date}.svg",
             "html": "",
@@ -206,3 +208,14 @@ class Project:
         # Overwrite html document
         with open(self.path+self.filenames["html"], "w", encoding="utf-8") as output:
             output.writelines(html_code)
+
+    def save_project_data(self):
+        """Save project data to JSON file."""
+        
+        try:
+            output_file = open(self.path+self.forecast_date+".json", "x")
+        except: # if file already exists
+            output_file = open(self.path+self.forecast_date+".json", "w")
+        finally:
+            json.dump(self.filenames, output_file, indent=2)
+            output_file.close()

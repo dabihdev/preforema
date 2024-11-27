@@ -97,6 +97,7 @@ class UI:
         self.current_project = Project(self.selected_day, author_string)                      # initialize project and project directory
         self.current_project.add_map()                                                        # add SVG template map to project directory
         self.current_project.add_document()                                                   # add docx template document to project directory
+        self.current_project.save_project_data()                                              # save project data to JSON
         print("Progetto creato con successo! Sto aprendo i file...")
         # os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
         # os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
@@ -107,12 +108,13 @@ class UI:
         try:
             print("Sto esportando il testo sulla pagina HTML...")
             self.current_project.add_html()                            # add docx template document to project directory
+            self.current_project.save_project_data()                   # update JSON file with name of newly created html
             self.current_project.export_text_to_html()                 # export forecast text to HTML page
         except:
             print("ERRORE: File di progetto non trovati. Prima di esportare il testo assicurarsi di aver creato un progetto.") # print error message
-        else:
+        else: 
             print("Testo esportato! Apro la pagina...")
-            os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
+            # os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
 
 
     def show_info(self):
