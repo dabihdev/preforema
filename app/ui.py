@@ -9,6 +9,7 @@ class UI:
         # UI global settings
         self.selected_day = selected_day
         self.current_project = None
+        self.running = True
 
         # current user input
         self.user_choice = None
@@ -119,6 +120,7 @@ class UI:
         print()
         print("============== PREFOREMA, @DABIHDEV (2024) ===============")
         print()
+        self.running = False
 
     def run(self):
 
