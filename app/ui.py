@@ -94,7 +94,11 @@ class UI:
 
 
     def exit_program(self):
-        pass
+        print()
+        print("Chiudo il programma. Ciao!")
+        print()
+        print("============== PREFOREMA, @DABIHDEV (2024) ===============")
+        print()
 
     def run(self):
         pass
