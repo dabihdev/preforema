@@ -6,6 +6,7 @@
 
 from settings import *        # global settings
 from project import Project   # Project class
+import os                     # File and folder operations (works only on Windows)
 import json                   # JSON parsing
 
 class UI:
@@ -131,8 +132,8 @@ class UI:
         self.current_project.add_document()                                                   # add docx template document to project directory
         self.current_project.save_project_data()                                              # save project data to JSON
         print("Progetto creato con successo! Sto aprendo i file...")
-        # os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
-        # os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
+        os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
+        os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
         
 
     def export_to_html(self):
@@ -146,7 +147,7 @@ class UI:
             print("ERRORE: File di progetto non trovati. Prima di esportare il testo assicurarsi di aver creato un progetto.") # print error message
         else: 
             print("Testo esportato! Apro la pagina...")
-            # os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
+            os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
 
 
     def show_info(self):
