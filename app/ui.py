@@ -4,7 +4,9 @@ import os                     # operations within the folders (works only on Win
 
 class UI:
     def __init__(self):
+        """Initialize User Interface."""
         
+        # UI global settings
         self.selected_day = selected_day
         self.current_project = None
         
@@ -20,7 +22,7 @@ class UI:
     
     def update_commands(self):
         """Update commands description with current forecast day."""
-        self.commands["s"] =  f"selezionare il giorno di previsione (attuale: +{selected_day})."
+        self.commands["s"] =  f"selezionare il giorno di previsione (attuale: +{self.selected_day})."
 
     
     def get_input(self):
