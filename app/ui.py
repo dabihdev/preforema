@@ -50,6 +50,7 @@ class UI:
             print("Sto caricando il progetto...")
             data = json.load(file)                                                             # load project data
             self.current_project = Project(data["forecast_day"], data["author"])               # initialize project
+            self.selected_day = data["forecast_day"]                                           # update forecast day
         finally:
             file.close()
     
