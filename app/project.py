@@ -12,26 +12,24 @@ class Project:
                  ):
         """Initialize the project."""
 
-        # set forecast date
-        forecast_day = datetime.today() + timedelta(days=selected_day)
-        forecast_date = forecast_day.strftime('%d-%m-%Y') # convert to string format
-        forecast_weekday = weekdays_dict[forecast_day.weekday()]
+        # set forecast day
+        self.forecast_day = datetime.today() + timedelta(days=selected_day)
+
+        # set forecast date = project directory name = project name
+        self.forecast_date = self.forecast_day.strftime('%d-%m-%Y') # convert to string format
         
-        # project name = folder name = forecast date
-        self.forecast_date = forecast_date
-        
-        # set weekday of forecast date
-        self.forecast_weekday = forecast_weekday
+        # get forecast date weekday
+        self.forecast_weekday = weekdays_dict[self.forecast_day.weekday()]
 
         # project path
-        self.path = output_dir+forecast_date+"/"                        
+        self.path = output_dir+self.forecast_date+"/"                        
         
         # dictionary of file names inside the project directory
         self.filenames = {
-            "docx": f"previsione_{forecast_date}.docx",
-            "svg": f"mappa_{forecast_date}.svg",
-            "html": f"{forecast_date}.html",
-            "json": f"{forecast_date}.json",
+            "docx": f"previsione_{self.forecast_date}.docx",
+            "svg": f"mappa_{self.forecast_date}.svg",
+            "html": f"{self.forecast_date}.html",
+            "json": f"{self.forecast_date}.json",
             }                                            
         
         # author(s) name(s)
@@ -103,3 +101,47 @@ class Project:
             with open(self.path+self.filenames["svg"], "x") as svg:
                 svg.write(new_xml_content)
 
+
+    def add_html(self):
+        """Add html file in project directory, with updated date, time and author."""
+        
+        # Read html file content
+        with open('../assets/dd_mm_yyyy.html') as html:
+            html_soup = BeautifulSoup(html, "html5lib")
+
+        # Create updated title 
+        weekday = self.forecast_weekday
+        day = self.forecast_day.day
+        month = months_dict[self.forecast_day.month]
+        year = self.forecast_day.year
+        new_title = f"PREVISIONE PER {weekday} {day} {month} {year}"
+
+        # Create updated forecast time range
+        new_forecast_time_range = f"Valida dalle ore 00:00 alle 24:00 UTC di {weekday.lower()} {day} {month.lower()} {year}"
+
+        # Create updated authors string
+        new_authors = "Previsore: " + new_authors
+
+        # Create date of forecast issue
+        weekday = weekdays_dict[today.weekday()]
+        day = today.day
+        month = months_dict[today.month]
+        year = today.year
+        utc_hour = today.utcnow().strftime("%H:%M")
+        new_forecast_issue_date = f"Emessa {weekday.lower()} {day} {month.lower()} {year} alle ore {utc_hour} UTC"
+
+        # Update html elements
+        html_soup.find("title", {"id": "window-title"}).string = new_title.lower() # window title
+        html_soup.find("strong", {"id": "title-date"}).string = new_title # title
+        html_soup.find("span", {"id": "forecast-time-range"}).string = new_forecast_time_range # forecast time range
+        html_soup.find("p", {"id": "issue-date"}).string = new_forecast_issue_date # forecast issue date
+        html_soup.find("p", {"id": "authors"}).string = new_authors # forecast authors names
+
+        # Save edited html in new_folder_path
+        new_html_name = f'{self.forecast_date}.html'
+        if os.path.isfile(self.path+new_html_name):
+            with open(self.path+new_html_name, "w") as html:
+                html.write(str(html_soup.prettify(formatter="html")))
+        else:
+            with open(self.path+new_html_name, "x") as html:
+                html.write(str(html_soup.prettify(formatter="html")))
