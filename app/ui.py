@@ -24,12 +24,13 @@ class UI:
         print()
         day = input("Digitare il giorno di previsione come un numero intero (1 per domani, 2 per dopodomani, ecc.)> ")
         
-        # if input is valid, create new project for the selected day
+        # if input is an integer, update selected day
         try:
             day = int(day)
         except :
             print()
             print ('Il valore inserito non è numerico!')
+            print()
         else:
             self.selected_day = day
 
