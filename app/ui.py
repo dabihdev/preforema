@@ -85,7 +85,13 @@ class UI:
 
 
     def show_info(self):
-        pass
+        """Print the content of README.txt"""
+
+        # read and print text from file
+        with open("../README.txt", newline="", encoding="utf-8") as file:
+            for line in file.readlines():
+                print(line.strip())
+
 
     def exit_program(self):
         pass
