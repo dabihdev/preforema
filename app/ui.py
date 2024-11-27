@@ -63,12 +63,12 @@ class UI:
 
     
     def update_forecast_day(self):
-        """Change current forecast day."""
+        """Change current forecast day, reset current project to None."""
         # prompt user
         print()
         day = input("Digitare il giorno di previsione come un numero intero (1 per domani, 2 per dopodomani, ecc.)> ")
         
-        # if input is an integer, update selected day
+        # if input is an integer, update selected day and reset project
         try:
             day = int(day)
         except :
@@ -77,6 +77,7 @@ class UI:
             print()
         else:
             self.selected_day = day
+            self.current_project = None 
 
 
     def create_project(self):
