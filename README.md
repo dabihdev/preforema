@@ -15,7 +15,7 @@ Il contenuto di questa repo è quindi rivolto agli **sviluppatori** del progetto
 Per clonare l'intera repo nel tuo pc, vai alla tua cartella locale dove vuoi scaricare il codice, apri Git Bash (o software simile) e digita 
 
 ```
-git clone https://github.com/dabihdev/preforema
+git clone https://github.com/dabihdev/preforema.git
 ```
 
 Se non sei interessato alla cronologia delle modifiche, sulla pagina github clicca "Code" e poi "Download ZIP".
