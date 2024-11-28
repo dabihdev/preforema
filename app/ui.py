@@ -15,9 +15,9 @@ class UI:
         """Initialize User Interface."""
         
         # UI global settings
-        self.selected_day = 1 # default +1 (tomorrow)
-        self.current_project = None
-        self.running = True
+        self.selected_day = 1       # default +1 (tomorrow)
+        self.current_project = None # empty project
+        self.running = True         # set to False to stop main loop
 
         # current user input
         self.user_choice = None
