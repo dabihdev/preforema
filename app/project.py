@@ -94,7 +94,6 @@ class Project:
             return
         else:
             xml_content = svg.read()
-        finally:
             svg.close()            
 
         xml_soup = BeautifulSoup(xml_content, "xml")
@@ -129,8 +128,8 @@ class Project:
             return
         else:
             html_soup = BeautifulSoup(html, "html5lib")
-        finally:
-            html.close()       
+            html.close()
+                   
 
         # Create updated title 
         weekday = self.forecast_weekday
