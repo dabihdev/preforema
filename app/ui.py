@@ -126,27 +126,34 @@ class UI:
         """Ask user for author(s) name(s), initialize project directory and files, open docx and svg."""
         print()
         author_string = self.get_author_name()                                                # ask user input, return author(s) name(s)
-        print("Sto creando il progetto, attendere...")
+        print("> Sto creando il progetto, attendere...")
         self.current_project = Project(self.selected_day, author_string)                      # initialize project and project directory
-        self.current_project.add_map()                                                        # add SVG template map to project directory
+        svg_generated = self.current_project.add_map()                                                        # add SVG template map to project directory
         self.current_project.add_document()                                                   # add docx template document to project directory
         self.current_project.save_project_data()                                              # save project data to JSON
-        print("Progetto creato con successo! Sto aprendo i file...")
+        print("> Sto aprendo i file generati...")
         os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
-        os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
+        if svg_generated:
+            os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
+        else:
+            print("> ATTENZIONE: il file .svg non è stato generato. Assicurarsi che la cartella assets\nsia stata aggiunta nella cartella del programma preforema.")
         
-
+        
     def export_to_html(self):
         """If project directory and docx file are found, create html page and export forecast text to the html page."""
-        try:
-            print("Sto esportando il testo sulla pagina HTML...")
-            self.current_project.add_html()                            # add docx template document to project directory
+        
+        print("> Sto esportando il testo sulla pagina HTML...")
+        html_generated = self.current_project.add_html()               # add html template page to project directory
+        if html_generated:
             self.current_project.save_project_data()                   # update JSON file with name of newly created html
+        
+        # try exporting forecast text to HTML page
+        try:
             self.current_project.export_text_to_html()                 # export forecast text to HTML page
         except:
-            print("ERRORE: File di progetto non trovati. Prima di esportare il testo assicurarsi di aver creato un progetto.") # print error message
+            print("> ERRORE: File di progetto non trovati. Prima di esportare il testo assicurarsi di aver creato un progetto.") # print error message
         else: 
-            print("Testo esportato! Apro la pagina...")
+            print("> Testo esportato! Apro la pagina...")
             os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
 
 

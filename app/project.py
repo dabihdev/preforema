@@ -83,15 +83,15 @@ class Project:
         # Save the newly created docx document in the folder ./previsioni/ with the name formatted as "previsione_<today's date>.docx"
         new_document.save(self.path+self.filenames["docx"])
 
-    def add_map(self):
+    def add_map(self) -> bool:
         """Create new SVG file in the forecast folder with template map and updated date and author."""
 
         # try opening the file "./assets/mappa.svg" and read xml content
         try:
             svg = open("../assets/mappa.svg", "rt")
         except FileNotFoundError:
-            print("File mappa.svg non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema, e che contenga\nil file mappa.svg.")
-            return
+            print("> File mappa.svg non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema,\ne che contenga il file mappa.svg")
+            return False # stop function and flag the program
         else:
             xml_content = svg.read()
             svg.close()            
@@ -116,16 +116,22 @@ class Project:
             with open(self.path+self.filenames["svg"], "x") as svg:
                 svg.write(new_xml_content)
 
+        # log user if .svg was successfully created
+        print(f"> File .svg generato con successo!")
+        
+        # flag the program if .svg was succesfully created
+        return True
 
-    def add_html(self):
+
+    def add_html(self) -> bool:
         """Add html file in project directory, with updated date, time and author."""
         
         # try opening and reading the file "./assets/dd_mm_yyyy.html"
         try:
             html = open("../assets/dd_mm_yyyy.html", "rt")
         except FileNotFoundError:
-            print("File dd_mm_yyyy.html non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema, e che contenga\nil file dd_mm_yyyy.html.")
-            return
+            print("> File dd_mm_yyyy.html non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema,\ne che contenga il file dd_mm_yyyy.html")
+            return False # stop the function and flag the program
         else:
             html_soup = BeautifulSoup(html, "html5lib")
             html.close()
@@ -168,9 +174,14 @@ class Project:
             with open(self.path+new_html_name, "x") as html:
                 html.write(str(html_soup.prettify(formatter="html")))
 
-        print("File salvato")
+        # Log user
+        print(f"> File .html generato con successo!")
+        
         # Add file name to project dictionary of file names
         self.filenames["html"] = new_html_name
+
+        # Flag the program if file .html was successfully generated
+        return True
 
 
     def export_text_to_html(self):
