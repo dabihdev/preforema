@@ -121,9 +121,16 @@ class Project:
     def add_html(self):
         """Add html file in project directory, with updated date, time and author."""
         
-        # Read html file content
-        with open('../assets/dd_mm_yyyy.html') as html:
+        # try opening and reading the file "./assets/dd_mm_yyyy.html"
+        try:
+            html = open("../assets/dd_mm_yyyy.html", "rt")
+        except FileNotFoundError:
+            print("File dd_mm_yyyy.html non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema, e che contenga\nil file dd_mm_yyyy.html.")
+            return
+        else:
             html_soup = BeautifulSoup(html, "html5lib")
+        finally:
+            html.close()       
 
         # Create updated title 
         weekday = self.forecast_weekday
