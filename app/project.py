@@ -86,9 +86,16 @@ class Project:
     def add_map(self):
         """Create new SVG file in the forecast folder with template map and updated date and author."""
 
-        # Open the file "./assets/mappa.svg" and read xml content
-        with open("../assets/mappa.svg", "rt") as svg:
+        # try opening the file "./assets/mappa.svg" and read xml content
+        try:
+            svg = open("../assets/mappa.svg", "rt")
+        except FileNotFoundError:
+            print("File mappa.svg non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema, e che contenga\nil file mappa.svg.")
+            return
+        else:
             xml_content = svg.read()
+        finally:
+            svg.close()            
 
         xml_soup = BeautifulSoup(xml_content, "xml")
 
