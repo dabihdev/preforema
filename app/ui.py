@@ -128,7 +128,7 @@ class UI:
         author_string = self.get_author_name()                                                # ask user input, return author(s) name(s)
         print("> Sto creando il progetto, attendere...")
         self.current_project = Project(self.selected_day, author_string)                      # initialize project and project directory
-        svg_generated = self.current_project.add_map()                                                        # add SVG template map to project directory
+        svg_generated = self.current_project.add_map()                                        # add SVG template map to project directory
         self.current_project.add_document()                                                   # add docx template document to project directory
         self.current_project.save_project_data()                                              # save project data to JSON
         print("> Sto aprendo i file generati...")

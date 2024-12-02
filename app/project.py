@@ -83,6 +83,10 @@ class Project:
         # Save the newly created docx document in the folder ./previsioni/ with the name formatted as "previsione_<today's date>.docx"
         new_document.save(self.path+self.filenames["docx"])
 
+        # Log user
+        print("> File .docx generato con successo!")
+
+    
     def add_map(self) -> bool:
         """Create new SVG file in the forecast folder with template map and updated date and author."""
 
