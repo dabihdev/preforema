@@ -88,10 +88,10 @@ class UI:
         author_string = ""
 
         # Get user input
-        authors_names = input("Specificare il cognome dell'autore. In caso di 2 o più autori, specificare i diversi cognomi separandoli con uno spazio> ")
+        authors_names = input("Specificare il cognome dell'autore. In caso di 2 o più autori, specificare i diversi cognomi separandoli con una virgola> ")
 
         # Split authors names if more than one is given
-        authors_names_list = authors_names.split() # split the names and put them in a list
+        authors_names_list = authors_names.split(sep=",") # split the names and put them in a list
 
         for name in authors_names_list:
             author_string += name.upper() + "/"    # attach the names in upper case to the author_string
