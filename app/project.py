@@ -169,6 +169,7 @@ class Project:
         html_soup.find("title", {"id": "window-title"}).string = new_title.lower() # window title
         html_soup.find("strong", {"id": "title-date"}).string = new_title # title
         html_soup.find("span", {"id": "forecast-time-range"}).string = new_forecast_time_range # forecast time range
+        html_soup.find("img", {"id": "map-png"})["src"] = map_url # map URL
         html_soup.find("p", {"id": "issue-date"}).string = new_forecast_issue_date # forecast issue date
         html_soup.find("p", {"id": "authors"}).string = new_authors # forecast authors names
 
