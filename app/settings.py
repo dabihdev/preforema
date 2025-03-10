@@ -41,6 +41,3 @@ months_dict = {
 today = datetime.today()
 todays_date = today.strftime('%d-%m-%Y')
 todays_weekday = weekdays_dict[datetime.today().weekday()]
-
-# map URL
-map_url = f"https://www.pretemp.it/archivio/{today.year}/{months_dict[today.month].lower()}/cartine/{todays_date}.png"
