@@ -149,7 +149,7 @@ class Project:
         new_title = f"PREVISIONE PER {weekday} {day} {month} {year}"
 
         # Create updated map URL
-        map_url = f"https://www.pretemp.it/archivio/{year}/{month.lower()}/cartine/{todays_date}.png"
+        map_url = f"https://www.pretemp.it/archivio/{year}/{month.lower()}/cartine/{self.forecast_date}.svg"
         
         # Create updated forecast time range
         new_forecast_time_range = f"Valida dalle ore 00:00 alle 24:00 UTC di {weekday.lower()} {day} {month.lower()} {year}"
