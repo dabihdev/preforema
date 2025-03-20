@@ -28,6 +28,7 @@ class UI:
             "s": f"selezionare il giorno di previsione (attuale: +{self.selected_day}).",
             "p": "creare una nuova previsione (mappa e testo).",
             "e": "esportare il testo di previsione sulla pagina html.",
+            "g": "generare il codice HTML per l'anteprima",
             "i": "mostrare informazioni sul programma.",
             "x": "uscire dal programma."
         }
@@ -156,6 +157,8 @@ class UI:
             print("> Testo esportato! Apro la pagina...")
             os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
 
+    def generate_preview_html(self):
+        pass
 
     def show_info(self):
         """Print the content of README.txt"""
@@ -191,6 +194,8 @@ class UI:
             self.create_project()
         elif self.user_choice == "e":
             self.export_to_html()
+        elif self.user_choice == "g":
+            pass
         elif self.user_choice == "i":
             self.show_info()
         elif self.user_choice == "x":
