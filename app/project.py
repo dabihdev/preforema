@@ -39,7 +39,7 @@ class Project:
             "author": self.author_string,
             "forecast_day": selected_day,
             "docx": f"previsione_{self.forecast_date}.docx",
-            "svg": f"mappa_{self.forecast_date}.svg",
+            "svg": f"{self.forecast_date}.svg",
             "html": "",
             "json": f"{self.forecast_date}.json",
         }     
