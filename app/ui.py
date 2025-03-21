@@ -204,7 +204,7 @@ class UI:
         html_soup.find("span", {"id": "authors"}).string = f"Autori: {authors}"
 
         # save generated html code in txt file
-        gencode_file = f'livello{risk_level}.html'
+        gencode_file = f'livello{risk_level}.txt'
         if os.path.isfile(self.current_project.path+gencode_file):
             with open(self.current_project.path+gencode_file, "w", encoding="utf-8") as txt:
                 txt.write(str(html_soup.prettify(formatter="html")))
