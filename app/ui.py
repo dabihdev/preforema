@@ -193,19 +193,23 @@ class UI:
 
         # update html code
         html_soup.find("span", {"id": "forecast-date"}).string = new_title
-        html_soup.find("a", {"id": "page-link"})["href"] = page_url
-        html_soup.find("a", {"id": "map-page-link"})["href"] = page_url
+
+        for a in html_soup.find_all('a', href=True):
+            if (a['id'] == "page-link") | (a['id'] == "map-page-link"):
+                a['href'] = page_url
+                
         html_soup.find("img", {"id": "map-link"})["src"] = map_url
         html_soup.find("span", {"id": "risk-level"}).string = risk_level
         html_soup.find("span", {"id": "risk-level"})["style"] = style_string
+        html_soup.find("span", {"id": "authors"}).string = f"Autori: {authors}"
 
         # save generated html code in txt file
-        gencode_file = f'livello{risk_level}.txt'
+        gencode_file = f'livello{risk_level}.html'
         if os.path.isfile(self.current_project.path+gencode_file):
-            with open(self.current_project.path+gencode_file, "w") as txt:
+            with open(self.current_project.path+gencode_file, "w", encoding="utf-8") as txt:
                 txt.write(str(html_soup.prettify(formatter="html")))
         else:
-            with open(self.current_project.path+gencode_file, "x") as txt:
+            with open(self.current_project.path+gencode_file, "x", encoding="utf-8") as txt:
                 txt.write(str(html_soup.prettify(formatter="html")))
 
         # log user
