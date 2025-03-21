@@ -161,9 +161,9 @@ class UI:
     def generate_preview_html(self):
         # read and parse html code from asset
         try:
-            html = open("../assets/livello0.html", "rt")
+            html = open("../assets/preview.html", "rt", encoding= "utf-8")
         except FileNotFoundError:
-            print("> File livello0.html non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema,\ne che contenga il file livello0.html")
+            print("> File preview.html non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema,\ne che contenga il file preview.html")
             return False # stop the function and flag the program
         else:
             html_soup = BeautifulSoup(html, "html5lib")
