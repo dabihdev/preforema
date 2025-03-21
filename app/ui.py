@@ -4,10 +4,11 @@
 # Python version: 3.6.5
 # ====================================================================================
 
-from settings import *        # global settings
-from project import Project   # Project class
-import os                     # File and folder operations (works only on Windows)
-import json                   # JSON parsing
+from settings import *         # global settings
+from project import Project    # Project class
+import os                      # File and folder operations (works only on Windows)
+import json                    # JSON parsing
+from bs4 import BeautifulSoup  # XML/HTML parsing
 
 class UI:
     """Class initializing the program User Interface."""
@@ -158,7 +159,61 @@ class UI:
             os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
 
     def generate_preview_html(self):
-        pass
+        # read and parse html code from asset
+        try:
+            html = open("../assets/livello0.html", "rt")
+        except FileNotFoundError:
+            print("> File livello0.html non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema,\ne che contenga il file livello0.html")
+            return False # stop the function and flag the program
+        else:
+            html_soup = BeautifulSoup(html, "html5lib")
+            html.close()
+
+        # update following parameters:
+        # 1. forecast date (title)
+        weekday = self.current_project.forecast_weekday
+        day = self.current_project.forecast_day.day
+        month = months_dict[self.current_project.forecast_day.month]
+        year = self.current_project.forecast_day.year
+        new_title = f"PREVISIONE PER {weekday} {day} {month} {year}"
+
+        # 2. link to forecast page
+        page_url = f"https://www.pretemp.it/archivio/{year}/{month.lower()}/previsioni/{self.current_project.forecast_date}.html"
+
+        # 3. link to forecast map
+        map_url = f"https://www.pretemp.it/archivio/{year}/{month.lower()}/cartine/{self.current_project.forecast_date}.svg"
+
+        # 4. risk level + risk color
+        risk_level = input("Inserisci il livello di pericolosità più elevato che hai/avete emesso\n(inserire numero oppure la scritta assenti): ").upper()
+        risk_color = risk_colors_dict[risk_level] # color code as str
+        style_string = f"color: {risk_color}; font-size: 14pt; font-family: arial, helvetica, sans-serif;"
+
+        # 5. authors
+        authors = self.current_project.author_string
+
+        # update html code
+        html_soup.find("span", {"id": "forecast-date"}).string = new_title
+        html_soup.find("a", {"id": "page-link"})["href"] = page_url
+        html_soup.find("a", {"id": "map-page-link"})["href"] = page_url
+        html_soup.find("img", {"id": "map-link"})["src"] = map_url
+        html_soup.find("span", {"id": "risk-level"}).string = risk_level
+        html_soup.find("span", {"id": "risk-level"})["style"] = style_string
+
+        # save generated html code in txt file
+        gencode_file = f'livello{risk_level}.txt'
+        if os.path.isfile(self.current_project.path+gencode_file):
+            with open(self.current_project.path+gencode_file, "w") as txt:
+                txt.write(str(html_soup.prettify(formatter="html")))
+        else:
+            with open(self.current_project.path+gencode_file, "x") as txt:
+                txt.write(str(html_soup.prettify(formatter="html")))
+
+        # log user
+        print(f"Codice HTML di preview generato correttamente! Copialo dal file {gencode_file} e incollalo\nin home page")
+
+        # open txt file
+        os.system("start "+self.current_project.path+gencode_file)
+
 
     def show_info(self):
         """Print the content of README.txt"""
@@ -195,7 +250,7 @@ class UI:
         elif self.user_choice == "e":
             self.export_to_html()
         elif self.user_choice == "g":
-            pass
+            self.generate_preview_html()
         elif self.user_choice == "i":
             self.show_info()
         elif self.user_choice == "x":

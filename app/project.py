@@ -6,7 +6,7 @@
 
 import os                                     # operations within the folders (works only on Windows)
 from docx import Document                     # .docx file reading and writing
-from bs4 import BeautifulSoup                 # XML parsing
+from bs4 import BeautifulSoup                 # XML/HTML parsing
 from settings import *                        # import global settings
 from datetime import datetime, timedelta      # date and time processing
 import json                                   # JSON data parsing

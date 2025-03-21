@@ -37,6 +37,15 @@ months_dict = {
     12: "DICEMBRE"
 }
 
+# Dictionary of risk-level colors
+risk_colors_dict = {
+    "ASSENTI": "#277f9d",
+    "0": "#ffff00",
+    "1": "#ff6600",
+    "2": "#ff0000",
+    "3": "#FF00FF"
+}
+
 # Current day
 today = datetime.today()
 todays_date = today.strftime('%d-%m-%Y')
