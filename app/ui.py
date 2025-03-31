@@ -192,10 +192,13 @@ class UI:
         authors = self.current_project.author_string
 
         # update html code
-        html_soup.find("span", {"id": "forecast-date"}).string = new_title
+        # html_soup.find("span", {"id": "forecast-date"}).string = new_title
 
         for a in html_soup.find_all('a', href=True):
-            if (a['id'] == "page-link") | (a['id'] == "map-page-link"):
+            if (a['id'] == "page-link"):
+                a.string = new_title
+                a['href'] = page_url
+            elif a['id'] == "map-page-link":
                 a['href'] = page_url
                 
         html_soup.find("img", {"id": "map-link"})["src"] = map_url
