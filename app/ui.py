@@ -96,7 +96,7 @@ class UI:
         authors_names_list = authors_names.split(sep=",") # split the names and put them in a list
 
         for name in authors_names_list:
-            author_string += name.upper() + "/"    # attach the names in upper case to the author_string
+            author_string += name.upper().strip() + "/"    # attach the names in upper case to the author_string
 
         author_string = author_string[:-1]         # delete last '/'
 
