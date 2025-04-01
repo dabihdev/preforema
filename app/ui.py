@@ -181,7 +181,7 @@ class UI:
         page_url = f"https://www.pretemp.it/archivio/{year}/{month.lower()}/previsioni/{self.current_project.forecast_date}.html"
 
         # 3. link to forecast map
-        map_url = f"https://www.pretemp.it/archivio/{year}/{month.lower()}/cartine/{self.current_project.forecast_date}.svg"
+        map_url = f"https://www.pretemp.altervista.org/archivio/{year}/{month.lower()}/cartine/{self.current_project.forecast_date}.svg"
 
         # 4. risk level + risk color
         risk_level = input("Inserisci il livello di pericolosità più elevato che hai/avete emesso\n(inserire numero oppure la scritta assenti): ").upper()
