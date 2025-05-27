@@ -6,7 +6,7 @@
 
 from settings import *         # global settings
 from project import Project    # Project class
-import os                      # File and folder operations (works only on Windows)
+import os                      # File, folder and terminal operations (works only on Windows)
 import json                    # JSON parsing
 from bs4 import BeautifulSoup  # XML/HTML parsing
 
@@ -25,14 +25,20 @@ class UI:
         
         # dictionary of displayed commands
         self.commands = {
-            "a": "aprire un progetto esistente.",
-            "s": f"selezionare il giorno di previsione (attuale: +{self.selected_day}).",
-            "p": "creare una nuova previsione (mappa e testo).",
-            "e": "esportare il testo di previsione sulla pagina html.",
-            "g": "generare il codice HTML per l'anteprima",
-            "i": "mostrare informazioni sul programma.",
-            "x": "uscire dal programma."
+            "a": "APRIRE un progetto esistente.",
+            "s": f"SELEZIONARE il giorno di previsione (attuale: +{self.selected_day}).",
+            "p": "creare una NUOVA PREVISIONE (mappa e testo).",
+            "e": "esportare il testo di previsione sulla PAGINA HTML.",
+            "g": "generare il codice html per l'ANTEPRIMA",
+            "i": "mostrare INFORMAZIONI sul programma.",
+            "x": "USCIRE dal programma."
         }
+
+    
+    def return_to_menu(self):
+        """Make the program pause until user presses ENTER."""
+        input("premere INVIO per tornare al menù...")
+        os.system("cls") # clear screen
 
     
     def load_project(self):
@@ -262,7 +268,10 @@ class UI:
             self.show_info()
         elif self.user_choice == "x":
             self.exit_program()
+            return # interrupt function here
         else:
             print()
             print("Comando non riconosciuto, riprovare.")
-            print()
+        
+        # clear screen, go back to menu
+        self.return_to_menu()
