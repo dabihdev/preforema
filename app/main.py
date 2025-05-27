@@ -10,7 +10,7 @@ from ui import UI
 if __name__ == "__main__":
     
     # splash screen
-    print("\n========== PREFOREMA (PREtemp FOREcast MAnager) ==========")
+    print("\n========== PREFOREMA (PREtemp FOREcast MAnager) ==========\n")
 
     # initialize UI
     ui = UI()
@@ -18,3 +18,6 @@ if __name__ == "__main__":
     # start looping
     while(ui.running):
         ui.run()
+
+    # end screen
+    print("\n============== PREFOREMA, @DABIHDEV (2024) ===============\n")

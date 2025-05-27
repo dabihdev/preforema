@@ -73,7 +73,6 @@ class UI:
         """Display to the user the available commands for this program, get input from user."""
         
         # if current project not empty, print current project name and authors names
-        print()
         if(self.current_project):
             print(f"GIORNO DI PREVISIONE: {self.current_project.forecast_date}")
             print(f"AUTORE/I: {self.current_project.author_string}")
@@ -240,9 +239,6 @@ class UI:
     def exit_program(self):
         print()
         print("Chiudo il programma. Ciao!")
-        print()
-        print("============== PREFOREMA, @DABIHDEV (2024) ===============")
-        print()
         self.running = False
 
     def run(self):
