@@ -242,32 +242,33 @@ class UI:
         self.running = False
 
     def run(self):
+        """Run main loop."""
+        while self.running:
+            # update commands
+            self.update_commands()
 
-        # update commands
-        self.update_commands()
+            # prompt user
+            self.get_input()
 
-        # prompt user
-        self.get_input()
-
-        # handle user input
-        if self.user_choice == "a":
-            self.load_project()
-        elif self.user_choice == "s":
-            self.update_forecast_day()
-        elif self.user_choice == "p":
-            self.create_project()
-        elif self.user_choice == "e":
-            self.export_to_html()
-        elif self.user_choice == "g":
-            self.generate_preview_html()
-        elif self.user_choice == "i":
-            self.show_info()
-        elif self.user_choice == "x":
-            self.exit_program()
-            return # interrupt function here
-        else:
-            print()
-            print("Comando non riconosciuto, riprovare.")
-        
-        # clear screen, go back to menu
-        self.return_to_menu()
+            # handle user input
+            if self.user_choice == "a":
+                self.load_project()
+            elif self.user_choice == "s":
+                self.update_forecast_day()
+            elif self.user_choice == "p":
+                self.create_project()
+            elif self.user_choice == "e":
+                self.export_to_html()
+            elif self.user_choice == "g":
+                self.generate_preview_html()
+            elif self.user_choice == "i":
+                self.show_info()
+            elif self.user_choice == "x":
+                self.exit_program()
+                return # interrupt function here
+            else:
+                print()
+                print("Comando non riconosciuto, riprovare.")
+            
+            # clear screen, go back to menu
+            self.return_to_menu()

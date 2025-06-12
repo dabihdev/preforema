@@ -16,8 +16,7 @@ if __name__ == "__main__":
     ui = UI()
 
     # start looping
-    while(ui.running):
-        ui.run()
+    ui.run()
 
     # end screen
     print("\n============== PREFOREMA, @DABIHDEV (2024) ===============\n")
