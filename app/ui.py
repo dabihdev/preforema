@@ -20,6 +20,10 @@ class UI:
         self.current_project = None # empty project
         self.running = True         # set to False to stop main loop
 
+        # create output_dir folder if not existing yet
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+
         # current user input
         self.user_choice = None
         

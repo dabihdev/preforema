@@ -44,10 +44,6 @@ class Project:
             "json": f"{self.forecast_date}.json",
         }     
 
-        # create output folder if not existing already
-        if not os.path.exists(output_dir):
-            os.mkdir(output_dir)
-
         # create project folder if not existing already
         if not os.path.exists(self.path):
             os.mkdir(self.path)
