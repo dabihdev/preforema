@@ -22,7 +22,7 @@ class UI:
 
         # create output_dir folder if not existing yet
         if not os.path.exists(output_dir):
-            os.mkdir(output_dir)
+            os.mkdir(output_dir[:-1]) # remove last '/' in the string of output_dir
 
         # current user input
         self.user_choice = None
