@@ -51,17 +51,13 @@ class UI:
         # try fetching data
         print("Sto caricando il progetto...")
         try:
-            file = open(output_dir+folder_name+"/"+folder_name+'.json', 'r')
+            with open(output_dir+folder_name+"/"+folder_name+'.json', 'r') as file:
+                data = json.load(file)                                                             # load project data
+                self.current_project = Project(data["forecast_day"], data["author"])               # initialize project
+                self.selected_day = data["forecast_day"]                                           # update forecast day
+                print("Progetto caricato!")
         except:
             print("Nessun progetto con questo nome!")
-            return # stops function here
-        else:
-            data = json.load(file)                                                             # load project data
-            self.current_project = Project(data["forecast_day"], data["author"])               # initialize project
-            self.selected_day = data["forecast_day"]                                           # update forecast day
-            print("Progetto caricato!")
-        finally:
-            file.close()
     
 
     def update_commands(self):
@@ -122,7 +118,7 @@ class UI:
             day = int(day)
         except :
             print()
-            print ('Il valore inserito non è numerico!')
+            print ('Processo annullato!')
             print()
         else:
             self.selected_day = day
@@ -136,21 +132,26 @@ class UI:
         print("> Sto creando il progetto, attendere...")
         self.current_project = Project(self.selected_day, author_string)                      # initialize project and project directory
         svg_generated = self.current_project.add_map()                                        # add SVG template map to project directory
-        self.current_project.add_document()                                                   # add docx template document to project directory
-        self.current_project.save_project_data()                                              # save project data to JSON
-        print("> Sto aprendo i file generati...")
-        os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
-        if svg_generated:
+        
+        if svg_generated:                                        
+            self.current_project.add_document()                                                   # add docx template document to project directory
+            self.current_project.save_project_data()                                              # save project data to JSON
+            print("> Sto aprendo i file generati...")
+            os.system("start "+self.current_project.path+self.current_project.filenames["docx"])  # open the newly created docx file
             os.system("start "+self.current_project.path+self.current_project.filenames["svg"])   # open newly created svg map
         else:
-            print("> ATTENZIONE: il file .svg non è stato generato. Assicurarsi che la cartella assets\nsia stata aggiunta nella cartella del programma preforema.")
+            print("> ATTENZIONE: il file .svg non è stato generato.")                             # if svg not created stop the process and flag the user
         
         
     def export_to_html(self):
         """If project directory and docx file are found, create html page and export forecast text to the html page."""
         
-        print("> Sto esportando il testo sulla pagina HTML...")
-        html_generated = self.current_project.add_html()               # add html template page to project directory
+        if self.current_project:
+            print("> Sto esportando il testo sulla pagina HTML...")
+            html_generated = self.current_project.add_html()               # add html template page to project directory
+        else: # if no project created/selected
+            print("Non hai ancora creato o selezionato un progetto!")
+            return # stop function
         if html_generated:
             self.current_project.save_project_data()                   # update JSON file with name of newly created html
         
@@ -164,15 +165,18 @@ class UI:
             os.system("start "+self.current_project.path+self.current_project.filenames["html"])  # open newly created HTML page
 
     def generate_preview_html(self):
+        # stop if no project created/selected
+        if not self.current_project:
+            print("\n Non hai selezionato o creato nessun progetto!\n")
+            return # stop function
+        
         # read and parse html code from asset
         try:
-            html = open("../assets/preview.html", "rt", encoding= "utf-8")
+            with open("../assets/preview.html", "rt", encoding= "utf-8") as html:
+                html_soup = BeautifulSoup(html, "html5lib")
         except FileNotFoundError:
             print("> File preview.html non trovato. Assicurarsi che la cartella assets sia presente nella cartella di preforema,\ne che contenga il file preview.html")
-            return False # stop the function and flag the program
-        else:
-            html_soup = BeautifulSoup(html, "html5lib")
-            html.close()
+            return # stop the function
 
         # update following parameters:
         # 1. forecast date (title)
@@ -213,12 +217,8 @@ class UI:
 
         # save generated html code in txt file
         gencode_file = f'livello{risk_level}.txt'
-        if os.path.isfile(self.current_project.path+gencode_file):
-            with open(self.current_project.path+gencode_file, "w", encoding="utf-8") as txt:
-                txt.write(str(html_soup.prettify(formatter="html")))
-        else:
-            with open(self.current_project.path+gencode_file, "x", encoding="utf-8") as txt:
-                txt.write(str(html_soup.prettify(formatter="html")))
+        with open(self.current_project.path+gencode_file, "w", encoding="utf-8") as txt:
+            txt.write(str(html_soup.prettify(formatter="html")))
 
         # log user
         print(f"Codice HTML di preview generato correttamente! Copialo dal file {gencode_file} e incollalo\nin home page")
@@ -234,6 +234,9 @@ class UI:
         with open("../info.txt", newline="", encoding="utf-8") as file:
             for line in file.readlines():
                 print(line.strip())
+        
+        # add empty lines at the end
+        print("\n")
 
 
     def exit_program(self):

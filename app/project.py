@@ -113,17 +113,13 @@ class Project:
 
         
         # if file already exists overwrite it, otherwise create it
-        if os.path.isfile(self.path+self.filenames["svg"]):
-            with open(self.path+self.filenames["svg"], "w") as svg:
-                svg.write(new_xml_content)
-        else:
-            with open(self.path+self.filenames["svg"], "x") as svg:
-                svg.write(new_xml_content)
+        with open(self.path+self.filenames["svg"], "w") as svg:
+            svg.write(new_xml_content)
 
         # log user if .svg was successfully created
         print(f"> File .svg generato con successo!")
         
-        # flag the program if .svg was succesfully created
+        # flag the program
         return True
 
 
@@ -243,12 +239,7 @@ class Project:
             output.writelines(html_code)
 
     def save_project_data(self):
-        """Save project data to JSON file."""
-        
-        try:
-            output_file = open(self.path+self.forecast_date+".json", "x")
-        except: # if file already exists, overwrite
-            output_file = open(self.path+self.forecast_date+".json", "w")
-        finally:
-            json.dump(self.filenames, output_file, indent=2)
-            output_file.close()
+        """Save project data to JSON file."""  
+        output_file = open(self.path+self.forecast_date+".json", "w")
+        json.dump(self.filenames, output_file, indent=2)
+        output_file.close()
