@@ -29,7 +29,7 @@ class UI:
             "s": f"SELEZIONARE il giorno di previsione (attuale: +{self.selected_day}).",
             "p": "creare una NUOVA PREVISIONE (mappa e testo).",
             "e": "esportare il testo di previsione sulla PAGINA HTML.",
-            "g": "generare il codice html per l'ANTEPRIMA",
+            "g": "generare il codice html per l'ANTEPRIMA IN HOMEPAGE.",
             "i": "mostrare INFORMAZIONI sul programma.",
             "x": "USCIRE dal programma."
         }
