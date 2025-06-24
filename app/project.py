@@ -167,12 +167,8 @@ class Project:
 
         # Save edited html in new_folder_path
         new_html_name = f'{self.forecast_date}.html'
-        if os.path.isfile(self.path+new_html_name):
-            with open(self.path+new_html_name, "w") as html:
-                html.write(str(html_soup.prettify(formatter="html")))
-        else:
-            with open(self.path+new_html_name, "x") as html:
-                html.write(str(html_soup.prettify(formatter="html")))
+        with open(self.path+new_html_name, "w") as html:
+            html.write(str(html_soup.prettify(formatter="html")))
 
         # Log user
         print(f"> File .html generato con successo!")
@@ -192,47 +188,25 @@ class Project:
         paragraphs = []
         for paragraph in document.paragraphs:
             paragraphs.append(paragraph.text)
-
-        # Split paragraphs in 2 blocks: summary ("testo breve") and discussion ("discussione")
-        # summary
-        summary=[]
-        for paragraph in paragraphs:
-            if paragraph=="TESTO BREVE":
-                continue
-            elif paragraph=="DISCUSSIONE":
-                break
-            else:
-                summary.append(paragraph)
-
-        # discussion
-        paragraphs.remove("TESTO BREVE")
-        paragraphs.remove("DISCUSSIONE")
-        for paragraph in summary:
-            paragraphs.remove(paragraph)
         
-        discussion = paragraphs[:]
-
         # Read html code
         with open(self.path+self.filenames["html"]) as file:
             html_code = file.readlines()
 
-        # Add discussion
-        for i in range(len(discussion)):
-            if discussion[i].startswith("-"): # make section headers bold
-                html_code.insert(89+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'><strong>{discussion[i]}</strong></span></p>")
-            else:
-                html_code.insert(89+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'>{discussion[i]}</span></p>")
+        # Insert paragraphs in the html code. Make headers bold
+        # 75 is the line in the html code before which the new lines should be inserted
+        for i, paragraph in enumerate(paragraphs):
+            if paragraph.startswith("-"): # --sections--, font: 12pt
+                html_code.insert(75+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'><strong>{paragraph}</strong></span></p>")
+            elif paragraph.isupper(): # HEADERS, font: 14pt
+                html_code.insert(75+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 14pt;'><strong>{paragraph}</strong></span></p>")
+            else: # normal paragraphs, font: 12 pt
+                html_code.insert(75+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'>{paragraph}</span></p>")
         
-        # Add summary
-        for i in range(len(summary)):
-            if summary[i].startswith("-"): # make section headers bold
-                html_code.insert(82+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'><strong>{summary[i]}</strong></span></p>")
-            else:
-                html_code.insert(82+i, f"<p class='testo' style='text-align: justify;'><span style='font-size: 12pt;'>{summary[i]}</span></p>")
-
         # Overwrite html document
         with open(self.path+self.filenames["html"], "w", encoding="utf-8") as output:
             output.writelines(html_code)
+
 
     def save_project_data(self):
         """Save project data to JSON file."""  
